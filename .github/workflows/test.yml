@@ -1,10 +1,11 @@
 name: Debug log
 on: push
 jobs:
-    debug-log:
+    first:
         runs-on: ubuntu-latest
         steps:
-        - run: echo "::error::This is an error message"
-        - run: echo "::warning::This is a warning message"
-        - run: echo "::notice::This is a notice message"
-        - run: echo "::debug::This is a debug message"        
+        - run: echo sleep 10 && echo "First job completed"
+    second:
+        runs-on: ubuntu-latest
+        steps:
+        - run: echo sleep 10 && echo "Second job completed"
