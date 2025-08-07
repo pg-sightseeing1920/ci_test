@@ -1,12 +1,17 @@
-name: Debug log
+name: Share job data
 on: push
 jobs:
-    first:
+    before:
         runs-on: ubuntu-latest
         steps:
-        - run: echo sleep 10 && echo "First job completed"
-    second:
+            - id: generate
+              run: echo "message=Hello, World!" >> "${GITHUB_OUTPUT}"
+        outputs:
+            message: ${{ steps.generate.outputs.message }}
+    after:
         runs-on: ubuntu-latest
-        needs: [first]
+        needs: [before]
         steps:
-        - run: echo sleep 10 && echo "Second job completed"
+            - env:
+                MESSAGE: ${{ needs.before.outputs.message }}
+              run: echo "${MESSAGE}"
