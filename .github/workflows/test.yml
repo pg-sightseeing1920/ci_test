@@ -1,17 +1,19 @@
-name: Share job data
-on: push
+name: Environment
+on: 
+    workflow_dispatch:
+        inputs:
+            environment-name:
+                type: environment
+                default: test
+                required: false
+                description: Environment name
 jobs:
-    before:
+    print:
         runs-on: ubuntu-latest
+        environment: ${{ inputs.environment-name }}
+        env:
+            USERNAME: ${{ vars.USERNAME }}
+            PASSWORD: ${{ secrets.PASSWORD }}
         steps:
-            - id: generate
-              run: echo "message=Hello, World!" >> "${GITHUB_OUTPUT}"
-        outputs:
-            message: ${{ steps.generate.outputs.message }}
-    after:
-        runs-on: ubuntu-latest
-        needs: [before]
-        steps:
-            - env:
-                MESSAGE: ${{ needs.before.outputs.message }}
-              run: echo "${MESSAGE}"
+            - run: echo "${USERNAME}"
+            - run: echo "${PASSWORD:0:1} ${PASSWORD#?}"
