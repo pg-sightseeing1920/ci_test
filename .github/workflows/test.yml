@@ -4,7 +4,7 @@ jobs:
     debug-log:
         runs-on: ubuntu-latest
         steps:
-        - run: |
-            echo "::group::Show environment variables"
-            printenv
-            echo "::endgroup::"
+        - run: echo "::error::This is an error message"
+        - run: echo "::warning::This is a warning message"
+        - run: echo "::notice::This is a notice message"
+        - run: echo "::debug::This is a debug message"        
